@@ -282,7 +282,8 @@ RegisterNUICallback('select', function(data, cb)
 					end
 					
 					if DoesEntityExist(vehicle) then
-						TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BUM_BIN", 0, true);
+						setEntityHeadingFromEntity (vehicle, playerPed)
+						TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_VEHICLE_MECHANIC", 0, true);
 						Citizen.Wait(20000)
 						SetVehicleFixed(vehicle)
 						SetVehicleDeformationFixed(vehicle)
@@ -367,6 +368,11 @@ RegisterNUICallback('select', function(data, cb)
 		cb('ok')
 
 end)
+
+function setEntityHeadingFromEntity ( vehicle, playerPed )
+    local heading = GetEntityHeading(vehicle)
+    SetEntityHeading( playerPed, heading )
+end
 
 function getVehicleInDirection(coordFrom, coordTo)
 	local rayHandle = CastRayPointToPoint(coordFrom.x, coordFrom.y, coordFrom.z, coordTo.x, coordTo.y, coordTo.z, 10, GetPlayerPed(-1), 0)
